@@ -25,12 +25,11 @@ $MemoryStartupBytes = 2GB
 $VMProcessorCount = 2
 
 #Get the default HDD path
-$vmms = gwmi -namespace root\virtualization\v2 Msvm_VirtualSystemManagementService
-$vmmsSettings = gwmi -namespace root\virtualization\v2 Msvm_VirtualSystemManagementServiceSettingData
+$vmmsSettings = Get-WmiObject -namespace root\virtualization\v2 Msvm_VirtualSystemManagementServiceSettingData
 $vhdxPath = Join-Path $vmmsSettings.DefaultVirtualHardDiskPath "$VMName.vhdx"
 
 #Create new Hyper-V VM
-New-VM -Name $VMName -Generation 2 -SwitchName  $VMSwitchName -MemoryStartupBytes $MemoryStartupBytes -NewVHDPath $vhdxPath -NewVHDSizeBytes $VHDXSizeBytes
+New-VM -Name $VMName -Generation 2 -SwitchName $VMSwitchName -MemoryStartupBytes $MemoryStartupBytes -NewVHDPath $vhdxPath -NewVHDSizeBytes $VHDXSizeBytes
 
 #VM Configure the new VM
 Set-VMProcessor $VMName -Count $VMProcessorCount
