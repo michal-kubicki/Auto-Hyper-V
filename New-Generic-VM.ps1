@@ -9,12 +9,12 @@ param(
     [ValidateNotNullOrEmpty()]
     [string]$VMName,
     
-    [parameter(Mandatory=$true)]
+    [parameter(Mandatory = $true)]
     [ValidateRange(1, [int64]::MaxValue)]
     [int64]$VMProcessorCount,
 
-    [Parameter(Mandatory=$true)]
-    [ValidateScript({Test-Path $_})]
+    [Parameter(Mandatory = $true)]
+    [ValidateScript( { Test-Path $_ })]
     [string]$ISOPath
 )
 
@@ -23,6 +23,14 @@ param(
 $VMSwitchName = 'External Virtual Switch'
 $VHDXSizeBytes = 10GB
 $MemoryStartupBytes = 2GB
+
+#Check the number of available cores
+$NumberOfLogicalProcessors = (Get-CIMInstance -Class 'CIM_Processor').NumberOfLogicalProcessors
+
+#Check if the number of desired cores in NOT greater that the number of available cores
+if ($VMProcessorCount -gt $NumberOfLogicalProcessors){
+    $VMProcessorCount = $NumberOfLogicalProcessors
+}
 
 #Get the default HDD path
 $vmmsSettings = Get-WmiObject -namespace root\virtualization\v2 Msvm_VirtualSystemManagementServiceSettingData
