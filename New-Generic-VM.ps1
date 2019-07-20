@@ -35,3 +35,10 @@ New-VM -Name $VMName -Generation 2 -SwitchName  $VMSwitchName -MemoryStartupByte
 #VM Configure the new VM
 Set-VMProcessor $VMName -Count $VMProcessorCount
 Set-VMFirmware -VMName $VMName -EnableSecureBoot off
+
+#Boot order
+Add-VMDvdDrive -VMName $VMName -Path $ISOPath
+$vmHardDiskDrive = Get-VMHardDiskDrive -VMName $VMName
+$VMDvdDrive = Get-VMDvdDrive -VMName $VMName
+
+Set-VMFirmware $VMName -BootOrder $VMDvdDrive, $vmHardDiskDrive
