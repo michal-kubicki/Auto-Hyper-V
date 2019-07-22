@@ -1,7 +1,9 @@
 # Auto-Hyper-V
 Automate the Hyper-V Virtual Machine deployment with PowerShell.
 
-## Description
+## New-Generic-VM
+
+### Description
 
 This is a simple PowerShell script for quick VM deployment. It takes three parameters: VMName, VMProcessorCount and ISOPath. If the specified number of CPU / cores exceeds available cores it will be reduced to the number of available cores.
 
@@ -15,7 +17,17 @@ The script will create a new VM with predefined memory, CPU / cores. Specified I
 
 The boot order will be set to: DVD, HDD so you can proceed to install an OS.
 
-## Usage
-```New-Generic-VM.ps1 Ubuntu 4 d:\ubuntu-18.04.2-live-server-amd64.iso```
+### Usage
+```.\New-Generic-VM.ps1 Ubuntu 4 d:\ubuntu-18.04.2-live-server-amd64.iso```
 
 will create a new VM named Ubuntu with 2GB of RAM and 4 CPU / cores. The VM will boot from ubuntu-18.04.2-live-server-amd64.iso.
+
+## Control-VMs
+
+### Description
+
+Control-VMs can start all stopped VMs or stop all running instances. It targets localhost server by default but you can adjust the script if needed.
+
+### Usage
+
+```.\Control-Vms start | stop```
